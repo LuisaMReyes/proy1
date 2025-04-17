@@ -34,3 +34,17 @@ class Author:
 
     def get_authors(self):
         return self._authors
+
+    @classmethod
+    def patch_author(cls, author_id: str, name: str | None = None, nationality: str | None = None, birth_date: date | None = None) -> bool:
+        author = cls.get_author_by_id(author_id)
+        if not author:
+            return False
+            
+        if name is not None:
+            author.name = name
+        if nationality is not None:
+            author.nationality = nationality
+        if birth_date is not None:
+            author.birth_date = birth_date
+        return True
