@@ -1,5 +1,7 @@
 from typing import List
 from datetime import date
+from library.helpers.status import Status
+from library.people.author import Author
 
 
 class Article:
@@ -17,8 +19,8 @@ class Article:
         periodicity: str,
         volume: str,
         field: str,
-        status: str,
-        authors: List[str],
+        status: Status,
+        authors: List[Author],
     ):
         self.doi = doi
         self.title = title
@@ -32,17 +34,17 @@ class Article:
         self.authors = authors
 
     def __str__(self) -> str:
-        """retornamos una representación en string del artículo"""
+        """
+        Retorna una representación en string del artículo con formato legible
+        incluyendo título, autores, journal y otros detalles relevantes.
+        """
+        authors_str = "\n".join(str(author) for author in self.authors)
         return (
-            f"{self.title} - {', '.join(self.authors)} ({self.publication_date.year})"
+            f"Título: {self.title}\n"
+            f"Autores: \n{authors_str}\n"
+            f"Journal: {self.journal} ({self.volume})\n"
+            f"DOI: {self.doi}\n"
+            f"Publicado: {self.publication_date.strftime('%d/%m/%Y')}\n"
+            f"Campo: {self.field}\n"
+            f"Estado: {self.status.value}"
         )
-
-    def get_citation(self) -> str:
-        """retornamos la cita del artículo en formato APA"""
-        authors_citation = ", ".join(self.authors[:-1])
-        if len(self.authors) > 1:
-            authors_citation += f" & {self.authors[-1]}"
-        elif len(self.authors) == 1:
-            authors_citation = self.authors[0]
-
-        return f"{authors_citation}. ({self.publication_date.year}). {self.title}. {self.journal}, {self.volume}. {self.doi}"
