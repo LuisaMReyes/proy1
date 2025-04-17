@@ -25,4 +25,4 @@ Se ha desarrollado bajo los siguientes principios:
 ## 🧑‍💻 Integrantes del equipo
 
 - **Cristhian Giraldo** - 1092455532
-- **Luisa Reyes** - 
+- **Luisa Reyes** - 1137059924
