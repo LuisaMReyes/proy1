@@ -7,7 +7,6 @@ from library.people.author import Author
 
 
 def main():
-    # Importamos los datos de prueba
     import data
 
     print("\n=== SISTEMA DE BIBLIOTECA ===")
