@@ -23,6 +23,10 @@ def main():
         birth_date=date(1906, 12, 9),
     )
 
+    if not Author.patch_author("GH456", name="Grace Murray Hopper"):
+        ErrorManager(ErrorType.AUTHOR_NOT_FOUND)
+        return
+
     # Creamos a Alan Turing
     Author.create(
         author_id="AT789",
