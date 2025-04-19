@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Status(Enum):
+class ItemStatus(Enum):
     AVAILABLE = "Disponible"
     BORROWED = "Prestado"
     IN_LIBRARY = "En biblioteca"

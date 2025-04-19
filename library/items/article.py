@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List
 from datetime import date
 from library.categories.category import Category
-from library.helpers.status import Status
+from library.helpers.item_status import ItemStatus
 from library.people.author import Author
 
 
@@ -27,7 +27,7 @@ class Article:
         periodicity: str,
         volume: str,
         field: str,
-        status: Status,
+        status: ItemStatus,
         authors: List[Author],
         categories: List[Category] = [],
     ):
@@ -73,7 +73,7 @@ class Article:
         periodicity: str,
         volume: str,
         field: str,
-        status: Status,
+        status: ItemStatus,
         authors: List[Author],
         categories: List[Category] = [],
     ) -> bool:
