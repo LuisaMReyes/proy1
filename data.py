@@ -2,7 +2,7 @@
 from datetime import date
 
 from library.items.article import Article
-from library.helpers.status import Status
+from library.helpers.item_status import ItemStatus
 from library.categories.category import Category
 from library.people.author import Author
 
@@ -92,7 +92,7 @@ if turing_author is None:
 if curie_author is None:
     raise ValueError("No se pudo encontrar el autor Marie Curie (CUR001)")
 if aristotle_author is None:
-    raise ValueError("No se pudo encontrar el autor Aristóteles (ARI001)") 
+    raise ValueError("No se pudo encontrar el autor Aristóteles (ARI001)")
 
 Article.create(
     doi="10.1234/computing.1950.123",
@@ -103,7 +103,7 @@ Article.create(
     periodicity="Trimestral",
     volume="LIX",
     field="Computación",
-    status=Status.AVAILABLE,
+    status=ItemStatus.AVAILABLE,
     authors=[turing_author],
     categories=[computacion, ia, filosofia],
 )
@@ -117,7 +117,7 @@ Article.create(
     periodicity="Semanal",
     volume="127",
     field="Química",
-    status=Status.AVAILABLE,
+    status=ItemStatus.AVAILABLE,
     authors=[curie_author, aristotle_author],
     categories=[ciencia, quimica],
 )

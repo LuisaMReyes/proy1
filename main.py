@@ -2,7 +2,7 @@ from datetime import date
 
 from library.helpers.error import ErrorManager, ErrorType
 from library.items.article import Article
-from library.helpers.status import Status
+from library.helpers.item_status import ItemStatus
 from library.people.author import Author
 
 
