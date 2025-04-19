@@ -52,6 +52,7 @@ class Book:
          f"ISBN:{self.ISBN}\n"
          f"Idioma:{self.language}\n"
          f"Categorías:\n{categories_str}\n"
+         f"Estado:{self.status.value}\n"
         )
     @classmethod
     def register(

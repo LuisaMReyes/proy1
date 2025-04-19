@@ -59,7 +59,7 @@ class Article:
             f"Publicado: {self.publication_date.strftime('%d/%m/%Y')}\n"
             f"Campo: {self.field}\n"
             f"Estado: {self.status.value}"
-            f"nCategorías: \n{categories_str}\n"
+            f"Categorías: \n{categories_str}\n"
         )
 
     @classmethod
