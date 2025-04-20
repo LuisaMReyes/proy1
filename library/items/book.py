@@ -97,10 +97,6 @@ class Book:
             status=ItemStatus.AVAILABLE
         )
 
-
-
-
-
         return True
 
     @classmethod
