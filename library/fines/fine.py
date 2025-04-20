@@ -35,18 +35,45 @@ class Fine:
         delay=(self.real_delivery_date- start_count).days
         self.delay_days=max(0,delay)
         return self.delay_days
+    @classmethod
+    def generate_fine(
+        cls,
+        loan:Loan,
+        real_delivery_date:date,
+    )->Fine:
+        
+        fine=Fine(loan,real_delivery_date)
+        fine.calculate_delay_days()
+
+        if fine.delay_days >0:
+            fine.fine_days=fine.delay_days*3
+            fine.start_date=date.today()
+            fine.end_date=fine.start_date+timedelta(days=fine.fine_days)
+            fine.status=Fine_Status.ACTIVE
+        return fine
+    @classmethod
+    def lift_fine(
+        cls,
+        fine_id:str,
+    )->bool:
+        for fine in cls._fines:
+            if fine.id_fine==fine_id and fine.status==Fine_Status.ACTIVE:
+                if fine.end_date and date.today()>=fine.end_date:
+                    fine.status=Fine_Status.INACTIVE
+                    return True
+        return False
+    @classmethod
+    def lift_fine_Auto(
+        cls,
+        current_date:date=None,
+        )->None:
+        if current_date is None:
+            current_date=date.today()
+
+        for fine in cls._fines:
+            if fine.status==Fine_Status.ACTIVE and fine.end_date and current_date>=fine.end_date:
+                fine.status=Fine_Status.INACTIVE
     
-    def generate_fine(self)->None:
-        delay=self.calculate_delay_days()
-        if delay >0:
-            self.fine_days=delay*3
-            self.start_date=date.today()
-            self.end_date=self.start_date+timedelta(days=self.fine_days)
-            self.status=Fine_Status.ACTIVE
-    
-    def lift_fine(self)->None:
-        if self.end_date and date.today() >= self.end_date:
-            self.status=Fine_Status.INACTIVE
     
     def __str__(self)->str:
         return(
@@ -60,3 +87,13 @@ class Fine:
             f"Estado:{self.status.value}\n"
 
         )
+    @classmethod
+    def get_all_fines(cls)->List[Fine]:
+        return cls._fines
+    @classmethod
+    def get_active_fines(cls)->List[Fine]:
+        return [fine for fine in cls._fines if fine.status==Fine_Status.ACTIVE]
+    
+    @classmethod
+    def get_inactive_fines(cls)->List[Fine]:
+        return [fine for fine in cls._fines if fine.status==Fine_Status.INACTIVE]
