@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import List
 from datetime import date
 from library.categories.category import Category
+from library.copies.copies import Copies
 from library.helpers.item_status import ItemStatus
 from library.people.author import Author
 
-# from library.copies.
 
 
 class Book:
@@ -24,7 +24,6 @@ class Book:
         authors: List[Author],
         ISBN: str,
         language: str,
-        # available_copies:copies,
         status: ItemStatus,
         categories: List[Category] = [],
     ):
@@ -36,13 +35,14 @@ class Book:
         self.authors = authors
         self.ISBN = ISBN
         self.language = language
-        # self.available_copies=available_copies
         self.status = status
         self.categories = categories
 
     def __str__(self) -> str:
         authors_str = "\n".join(str(author) for author in self.authors)
         categories_str = "\n".join(str(category) for category in self.categories)
+        copias=Copies.get_copy_by_ISBN(self.ISBN)
+        available_copies=len(copias)
 
         return (
             f"Título:{self.title}\n"
@@ -53,6 +53,7 @@ class Book:
             f"Editorial:{self.publisher}\n"
             f"ISBN:{self.ISBN}\n"
             f"Idioma:{self.language}\n"
+            f"Número de copias disponibles:{available_copies}\n"
             f"Categorías:\n{categories_str}\n"
             f"Estado:{self.status.value}\n"
         )
@@ -88,12 +89,60 @@ class Book:
             categories=categories,
         )
         cls._books.append(new_book)
+
+        #Debe registrarse al menos 1 copia
+        Copies.register(
+            copy_ID=f"Copia_{ISBN}_1",
+            ISBN=ISBN,
+            status=ItemStatus.AVAILABLE
+        )
+
+
+
+
+
         return True
 
     @classmethod
-    def get_book_by_ISBN(cls, ISBN: str) -> Book | None:
+    def get_book_by_ISBN(cls, 
+                         ISBN: str,
+                         ) -> Book | None:
         for book in cls._books:
             if book.ISBN == ISBN:
                 return book
         return None
+    def update_book(
+            self,
+            new_genre:str=None,
+            new_title:str=None,
+            new_edition:str=None,
+            new_publication_date:date=None,
+            new_publisher:str=None,
+            new_authors:List[Author]=None,
+            new_language:str=None,
+            new_status:ItemStatus=None,
+            new_categories:List[Category]=None,
+    )-> None:
+         if new_genre:
+            self.genre=new_genre
+         if new_title:
+            self.title=new_title
+         if new_edition:
+            self.edition=new_edition
+         if new_publication_date:
+            self.publication_date=new_publication_date
+         if new_publisher:
+            self.publisher=new_publisher
+         if new_authors:
+            self.authors=new_authors  
+         if new_language:
+            self.language=new_language
+         if new_status:
+            self.status=new_status
+         if new_categories:
+            self.categories=new_categories
+  
+    def disable_book(self)->None:
+        self.status=ItemStatus.UNAVAILABLE
+
 
