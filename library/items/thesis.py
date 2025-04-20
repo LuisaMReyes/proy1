@@ -6,7 +6,6 @@ from library.categories.category import Category
 from library.helpers.item_status import ItemStatus
 from library.people.author import Author
 
-# from library.copies.
 
 
 class Thesis:
@@ -25,7 +24,7 @@ class Thesis:
         page_number: int,
         status: ItemStatus,
         categories: List[Category],
-        # copies?
+        
     ):
         self.title = title
         self.authors = authors
@@ -65,8 +64,17 @@ class Thesis:
         page_number: int,
         status: ItemStatus,
         categories: List[Category],
-        # copies?
+        
     ) -> bool:
+        for thesis in cls._theses:
+            if(
+                set(thesis.authors)==set(authors) and
+                thesis.academy.lower()==academy.lower() and
+                thesis.investi_date==investi_date and
+                thesis.publication_date==publication_date
+
+            ):
+                return False
         new_thesis = cls(
             title=title,
             authors=authors,
@@ -90,3 +98,25 @@ class Thesis:
             ):
                 result.append(thesis)
         return result
+    
+    @classmethod
+    def update_thesis(
+        self,
+        new_title:str=None,
+        new_authors:List[Author]=None,
+        new_academy:str=None,
+        new_investi_date:date=None,
+        new_publication_date:date=None,
+        new_field:str=None,
+        new_page_number:int=None,
+        new_status=ItemStatus=None,
+        new_categories: List[Category]=None,
+    )
+    @classmethod
+    def delete_thesis(cls,title:str)->bool:
+        for thesis in cls._theses:
+            if thesis.title.lower()==title.lower():
+                cls._theses.remove(thesis)
+                return True
+        return False
+    
