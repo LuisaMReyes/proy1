@@ -106,3 +106,50 @@ class Article:
             if article.doi == doi:
                 return article
         return None
+    def update_article(
+            self,
+            new_doi:str=None,
+            new_title:str=None,
+            new_publisher_name:str=None,
+            new_publication_date:date=None,
+            new_journal:str=None,
+            new_periodicity:str=None,
+            new_volume:str=None,
+            new_field:str=None,
+            new_status:ItemStatus=None,
+            new_authors:List[Author]=None,
+            new_categories:List[Category]=None,
+    ) -> None:
+         if new_doi:
+            self.doi=new_doi
+         if new_title:
+            self.title=new_title
+         if new_publisher_name:
+            self.publisher_name=new_publisher_name
+         if new_publication_date:
+            self.publication_date=new_publication_date
+         if new_journal:
+            self.journal=new_journal
+         if new_periodicity:
+            self.periodicity=new_periodicity
+         if new_volume:
+            self.volume=new_volume
+         if new_field:
+            self.field=new_field
+         if new_status:
+            self.status=new_status
+         if new_authors:
+            self.authors=new_authors
+         if new_categories:
+             self.categories=new_categories
+
+    @classmethod
+    def delete_article(cls,doi:str)->bool:
+        article=cls.get_article_by_doi(doi)
+        if article:
+            cls._articles.remove(article)
+            return True
+        return False
+
+
+        
