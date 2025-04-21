@@ -4,7 +4,7 @@ from library.helpers.copy_status import Copy_status
 from library.helpers.error import ErrorType,ErrorManager
 
 class Copies:
-    _next_ID=1
+
     _copies=List["Copies"]=[]
     def __init__(
             self,
