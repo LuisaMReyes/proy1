@@ -10,17 +10,36 @@ Este documento describe la organización de carpetas y archivos del proyecto, co
 
 ```
 LibrarySystem/
-└── docs/
-    └── strucure.md
+├── docs/
+│   └── structure.md
 ├── main.py
 ├── README.md
 └── library/
     ├── items/
+    │   ├── book.py
+    │   ├── thesis.py
+    │   └── article.py
     ├── people/
+    │   ├── author.py
+    │   └── reader.py
     ├── loans/
+    │   ├── loan.py
+    │
+    ├── fines/
+    |   ├── fine.py   
+    | 
     ├── copies/
+    │   └── copies.py
     ├── categories/
-    └── utils/
+    │   └── category.py
+    └── helpers/
+        ├── error.py
+        ├── reader_status.py
+        ├── item_status.py
+        ├── fine_status.py
+        ├── copy_status.py
+        └── item_type.py
+
 ```
 
 ---
@@ -36,12 +55,17 @@ Archivo principal del sistema. Se encarga de importar las clases necesarias desd
 
 Este paquete agrupa todas las clases y funcionalidades del sistema, distribuidas en subpaquetes temáticos para mejorar la legibilidad.
 
-### `items/`
+### `items/`Módulo que maneja los productos de la biblioteca: Libros, Tesis y Artículos.
 
-### `people/`
+### `people/`Módulo que gestiona la información de autores y lectores.
 
-### `loans/`
+### `loans/`Módulo que administra los préstamos de copias.
 
-### `copies/`
+### `fines/`Módulo que gestiona las multas.
 
-### `categories/`
+### `copies/`Módulo para registrar, buscar y gestionar las copias de los libros.
+
+### `categories/`Módulo de categorías temáticas para clasificar productos.
+
+### `helpers/` Módulo auxiliar que define tipos enumerados (estados, errores, tipos de productos), control de errores, y estados.
+
