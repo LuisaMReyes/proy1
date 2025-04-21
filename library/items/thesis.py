@@ -10,7 +10,6 @@ from library.people.author import Author
 
 class Thesis:
 
-    _next_id = 1
     _theses: List[Thesis] = []
 
     def __init__(
@@ -126,6 +125,9 @@ class Thesis:
     new_status: ItemStatus = None,
     new_categories: List[Category] = None,
 ) -> None:
+     if self.status != ItemStatus.AVAILABLE:
+        print("No se puede modificar una tesis inhabilitada .")
+        return
      if new_title:
         self.title = new_title
      if new_authors:
