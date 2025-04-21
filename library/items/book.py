@@ -21,7 +21,7 @@ class Book:
         publication_date: date,
         publisher: str,
         authors: List[Author],
-        ISBN: str,
+        isbn: str,
         language: str,
         status: ItemStatus,
         categories: List[Category] = [],
@@ -32,7 +32,7 @@ class Book:
         self.publication_date = publication_date
         self.publisher = publisher
         self.authors = authors
-        self.ISBN = ISBN
+        self.isbn = isbn
         self.language = language
         self.status = status
         self.categories = categories
@@ -40,7 +40,7 @@ class Book:
     def __str__(self) -> str:
         authors_str = "\n".join(str(author) for author in self.authors)
         categories_str = "\n".join(str(category) for category in self.categories)
-        copias = Copies.get_copy_by_ISBN(self.ISBN)
+        copias = Copies.get_copy_by_isbn(self.isbn)
         available_copies = len(copias)
 
         return (
@@ -50,7 +50,7 @@ class Book:
             f"Edicion:{self.edition}\n"
             f"Fecha de publicacion:{self.publication_date.strftime('%d/%m/%Y')}\n"
             f"Editorial:{self.publisher}\n"
-            f"ISBN:{self.ISBN}\n"
+            f"isbn:{self.isbn}\n"
             f"Idioma:{self.language}\n"
             f"Número de copias disponibles:{available_copies}\n"
             f"Categorías:\n{categories_str}\n"
@@ -66,13 +66,13 @@ class Book:
         publication_date: date,
         publisher: str,
         authors: List[Author],
-        ISBN: str,
+        isbn: str,
         language: str,
         # available_copies:copies,
         status: ItemStatus,
         categories: List[Category] = [],
     ) -> bool:
-        if cls.get_book_by_ISBN(ISBN):
+        if cls.get_book_by_isbn(isbn):
             return False
         new_book = cls(
             genre=genre,
@@ -81,7 +81,7 @@ class Book:
             publication_date=publication_date,
             publisher=publisher,
             authors=authors,
-            ISBN=ISBN,
+            isbn=isbn,
             language=language,
             # available_copies=available_copies,
             status=status,
@@ -91,18 +91,18 @@ class Book:
 
         # Debe registrarse al menos 1 copia
         Copies.register(
-            copy_ID=f"Copia_{ISBN}_1", ISBN=ISBN, status=Copy_status.IN_LIBRARY
+            copy_ID=f"Copia_{isbn}_1", isbn=isbn, status=Copy_status.IN_LIBRARY
         )
 
         return True
 
     @classmethod
-    def get_book_by_ISBN(
+    def get_book_by_isbn(
         cls,
-        ISBN: str,
+        isbn: str,
     ) -> Book | None:
         for book in cls._books:
-            if book.ISBN == ISBN:
+            if book.isbn == isbn:
                 return book
         return None
 

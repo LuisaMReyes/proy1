@@ -11,17 +11,17 @@ class Copies:
     def __init__(
         self,
         copy_ID: str,
-        ISBN: str,
+        isbn: str,
         status: Copy_status,
     ):
         self.copy_ID = copy_ID
-        self.ISBN = ISBN
+        self.isbn = isbn
         self.status = status
 
     def __str__(self) -> str:
         return (
             f"Identificador:{self.copy_ID}\n"
-            f"ISBN:{self.ISBN}\n"
+            f"isbn:{self.isbn}\n"
             f"Estado:{self.status.value}\n"
         )
 
@@ -29,7 +29,7 @@ class Copies:
     def register(
         cls,
         copy_ID: str,
-        ISBN: str,
+        isbn: str,
         status: Copy_status,
     ) -> bool:
         if cls.get_copy_by_id(copy_ID):
@@ -37,7 +37,7 @@ class Copies:
             return False
         new_copy = cls(
             copy_ID=copy_ID,
-            ISBN=ISBN,
+            isbn=isbn,
             status=status,
         )
         cls._copies.append(new_copy)
@@ -51,8 +51,8 @@ class Copies:
         return None
 
     @classmethod
-    def get_copy_by_ISBN(cls, ISBN: str) -> List[Copies]:
-        copies = [copy for copy in cls._copies if copy.ISBN == ISBN]
+    def get_copy_by_isbn(cls, isbn: str) -> List[Copies]:
+        copies = [copy for copy in cls._copies if copy.isbn == isbn]
         if not copies:
             ErrorManager(ErrorType.NO_COPIES_FOR_BOOK)
         return copies
