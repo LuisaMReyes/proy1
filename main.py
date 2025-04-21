@@ -1,20 +1,9 @@
-from datetime import date
-
-from library.helpers.error import ErrorManager, ErrorType
-from library.items.article import Article
-from library.helpers.item_status import ItemStatus
-from library.people.author import Author
+from library.menu.menu import display_menu
 
 
 def main():
-    import data
-
-    print("\n=== SISTEMA DE BIBLIOTECA ===")
-
-    # Mostramos los artículos disponibles
-    print("\n=== Artículos Disponibles ===")
-    for article in Article._articles:
-        print(article)
+    display_menu()
+ 
 
 
 if __name__ == "__main__":
