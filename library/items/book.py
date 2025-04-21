@@ -106,6 +106,10 @@ class Book:
             if book.ISBN == ISBN:
                 return book
         return None
+    @classmethod
+    def get_books(cls) -> List[Book]:
+        return cls._books
+
     def update_book(
             self,
             new_genre:str=None,
