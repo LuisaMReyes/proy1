@@ -100,10 +100,16 @@ def modify_article():
 
         title = input(f"Título actual: {article.title}\nNuevo título: ").strip()
         journal = input(f"Revista actual: {article.journal}\nNueva revista: ").strip()
-        publisher_name = input(f"Editorial actual: {article.publisher_name}\nNueva editorial: ").strip()
-        periodicity = input(f"Periodicidad actual: {article.periodicity}\nNueva periodicidad: ").strip()
+        publisher_name = input(
+            f"Editorial actual: {article.publisher_name}\nNueva editorial: "
+        ).strip()
+        periodicity = input(
+            f"Periodicidad actual: {article.periodicity}\nNueva periodicidad: "
+        ).strip()
         volume = input(f"Volumen actual: {article.volume}\nNuevo volumen: ").strip()
-        field = input(f"Campo de estudio actual: {article.field}\nNuevo campo: ").strip()
+        field = input(
+            f"Campo de estudio actual: {article.field}\nNuevo campo: "
+        ).strip()
 
         # Fecha de publicación
         publication_date = article.publication_date
@@ -217,7 +223,9 @@ def register_article():
             publisher_name = input("Ingrese el nombre de la editorial: ").strip()
 
         # Periodicidad
-        periodicity = input("Ingrese la periodicidad de la revista (ej: Mensual, Trimestral): ").strip()
+        periodicity = input(
+            "Ingrese la periodicidad de la revista (ej: Mensual, Trimestral): "
+        ).strip()
         while not periodicity:
             print("La periodicidad no puede estar vacía.")
             periodicity = input("Ingrese la periodicidad de la revista: ").strip()
