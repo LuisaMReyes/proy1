@@ -10,6 +10,7 @@ from library.people.author import Author
 class Thesis:
 
     _theses: List[Thesis] = []
+    _counter: int = 1
 
     def __init__(
         self,
@@ -23,6 +24,11 @@ class Thesis:
         status: ItemStatus,
         categories: List[Category],
     ):
+        # Generar código único
+        year = publication_date.year
+        code = f"TESIS-{year}-{Thesis._counter:03d}"
+        Thesis._counter += 1
+        self.code = code
         self.title = title
         self.authors = authors
         self.academy = academy
@@ -38,6 +44,7 @@ class Thesis:
         categories_str = "\n".join(str(category) for category in self.categories)
 
         return (
+            f"Código:{self.code}\n"
             f"Título:{self.title}\n"
             f"Autor(es):\n{authors_str}\n"
             f"Institución académica:{self.academy}\n"
@@ -80,10 +87,14 @@ class Thesis:
         return True
 
     @classmethod
+    def get_all_theses(cls) -> List[Thesis]:
+        return cls._theses
+
+    @classmethod
     def get_thesis_by_author(
         cls,
         author_name: str,
-    ) -> List["Thesis"]:
+    ) -> List[Thesis]:
         result = []
         for thesis in cls._theses:
             if any(
@@ -91,6 +102,13 @@ class Thesis:
             ):
                 result.append(thesis)
         return result
+
+    @classmethod
+    def get_thesis_by_code(cls, code: str) -> Thesis | None:
+        for thesis in cls._theses:
+            if thesis.code == code:
+                return thesis
+        return None
 
     @classmethod
     def get_specific_thesis(
