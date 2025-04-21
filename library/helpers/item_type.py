@@ -9,3 +9,10 @@ class ProductType(Enum):
     THESIS = Thesis
     ARTICLE = Article
 
+    def get_display_name(self) -> str:
+        display_names = {
+            ProductType.BOOK: "Libro",
+            ProductType.THESIS: "Tesis",
+            ProductType.ARTICLE: "Artículo Cientifico"
+        }
+        return display_names[self]
