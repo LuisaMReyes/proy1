@@ -33,7 +33,7 @@ def create_author():
     author_id = input("Ingrese el ID del autor: ")
     name = input("Ingrese el nombre del autor: ")
     nationality = input("Ingrese la nacionalidad del autor: ")
-    
+
     while True:
         try:
             birth_date_str = input("Ingrese la fecha de nacimiento (DD-MM-YYYY): ")
@@ -41,7 +41,7 @@ def create_author():
             break
         except ValueError:
             print("Formato de fecha inválido. Use DD-MM-YYYY")
-    
+
     if Author.create(author_id, name, nationality, birth_date):
         print("\n¡Autor registrado exitosamente!")
     else:
@@ -91,31 +91,69 @@ def search_author():
 def modify_author():
     print("\n--- Modificación de Autor ---")
     author_id = input("Ingrese el ID del autor a modificar: ")
-    
+
     author = Author.get_author_by_id(author_id)
     if not author:
         print("\nNo se encontró ningún autor con ese ID.")
         return
 
     print("\nDeje en blanco los campos que no desea modificar:")
-    
+
     name = input(f"Nuevo nombre ({author.name}): ").strip()
     nationality = input(f"Nueva nacionalidad ({author.nationality}): ").strip()
-    
+
     birth_date = None
-    birth_date_str = input(f"Nueva fecha de nacimiento ({author.birth_date}) [DD-MM-YYYY]: ").strip()
+    birth_date_str = input(
+        f"Nueva fecha de nacimiento ({author.birth_date}) [DD-MM-YYYY]: "
+    ).strip()
     if birth_date_str:
         try:
             birth_date = datetime.strptime(birth_date_str, "%d-%m-%Y").date()
         except ValueError:
             print("Formato de fecha inválido. No se actualizará la fecha.")
-    
+
     if Author.patch_author(
         author_id,
         name if name else None,
         nationality if nationality else None,
-        birth_date
+        birth_date,
     ):
         print("\n¡Autor modificado exitosamente!")
     else:
         print("\nError al modificar el autor.")
+
+
+def select_authors() -> list[Author]:
+    """Muestra un menú para seleccionar autores y retorna la lista de autores seleccionados."""
+    authors = []
+    while True:
+        print("\n=== MENU DE AUTORES ===")
+        print("1. Adicionar autor con ID")
+        print("2. Ver autores")
+        print("3. Terminar de ingresar datos\n")
+
+        option = input("Seleccione una opción: ").strip()
+
+        if option == "1":
+            author_id = input("\nIngrese el ID del autor: ").strip()
+            author = Author.get_author_by_id(author_id)
+            if author:
+                if author not in authors:  # Evita duplicados
+                    authors.append(author)
+                    print(f"\nAutor agregado exitosamente:")
+                    print(author)
+                else:
+                    print("\nEste autor ya fue agregado al libro.")
+            else:
+                print("\nNo se encontró ningún autor con ese ID.")
+
+        elif option == "2":
+            search_author()
+
+        elif option == "3" or option.strip() == "":
+            break
+
+        else:
+            print("\nOpción inválida. Por favor, intente nuevamente.")
+
+    return authors

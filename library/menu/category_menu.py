@@ -193,6 +193,46 @@ def delete_category():
         print(f"\nError al eliminar la categoría: {str(e)}")
 
 
+def select_categories() -> list[Category]:
+    """Muestra un menú para seleccionar categorías y retorna la lista de categorías seleccionadas."""
+    categories = []
+    while True:
+        print("\n=== MENU DE CATEGORÍAS ===")
+        print("1. Adicionar categoría con ID")
+        print("2. Ver categorías")
+        print("3. Terminar de ingresar datos\n")
+
+        option = input("Seleccione una opción: ").strip()
+
+        if option == "1":
+            try:
+                category_id = int(input("\nIngrese el ID de la categoría: ").strip())
+                category = Category.get_category_by_id(category_id)
+            except ValueError:
+                print("\nError: El ID debe ser un número.")
+                continue
+            if category:
+                if category not in categories:  # Evita duplicados
+                    categories.append(category)
+                    print(f"\nCategoría agregada exitosamente:")
+                    print(category)
+                else:
+                    print("\nEsta categoría ya fue agregada al libro.")
+            else:
+                print("\nNo se encontró ninguna categoría con ese ID.")
+
+        elif option == "2":
+            print("\nListado de categorías disponibles:")
+            search_category()
+            
+        elif option == "3" or option.strip() == "":
+            break
+        else:
+            print("\nOpción inválida. Por favor, intente nuevamente.")
+
+    return categories
+
+
 def assign_subcategory():
     print("\n====== ASIGNAR SUBCATEGORÍA ======\n")
     try:

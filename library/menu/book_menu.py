@@ -1,5 +1,10 @@
-from datetime import date
+from datetime import date, datetime
+from library.categories.category import Category
+from library.helpers.item_status import ItemStatus
 from library.items.book import Book
+from library.menu.author_menu import select_authors
+from library.menu.category_menu import search_category, select_categories
+from library.people.author import Author
 
 
 def handle_books_management():
@@ -43,12 +48,17 @@ def search_book():
 
         if option == 1:
             # Mostrar todos los libros
-            if not Book._books:  # Accedemos a la lista interna de libros
+            books = Book.get_books()
+            if len(books) == 0:  # Verificamos si la lista de libros está vacía
                 print("\nNo hay libros registrados en el sistema.")
                 return
 
             print("\n=== LISTADO DE LIBROS ===\n")
-            Book.get_books()
+            print("\nISBN | Título | Género | Estado")
+            print("-" * 70)
+            for book in books:
+                print(f"{book.ISBN} | {book.title} | {book.genre} | {book.status.value}")
+            print("-" * 70)
 
         elif option == 2:
             # Buscar por ISBN
@@ -87,11 +97,6 @@ def modify_book():
         print("\nNo se encontró ningún libro con ese ISBN.")
         return
 
-    print("\nLibro encontrado:")
-    print("-" * 50)
-    print(book)
-    print("-" * 50)
-
     try:
         # Datos básicos del libro
         print("\nDeje en blanco los campos que no desea modificar\n")
@@ -101,57 +106,32 @@ def modify_book():
         edition = input(f"Edición actual: {book.edition}\nNueva edición: ").strip()
 
         # Fecha de publicación
-        publication_date = None
-        modify_date = input(
-            f"Fecha de publicación actual: {book.publication_date.strftime('%d/%m/%Y')}\n¿Desea modificar la fecha? (s/n): "
-        ).lower()
-        if modify_date == "s":
-            while True:
-                try:
-                    year = int(input("Ingrese el nuevo año de publicación (YYYY): "))
-                    month = int(input("Ingrese el nuevo mes de publicación (1-12): "))
-                    day = int(input("Ingrese el nuevo día de publicación (1-31): "))
-                    publication_date = date(year, month, day)
-                    break
-                except ValueError:
-                    print("Fecha inválida. Por favor, intente nuevamente.")
+        publication_date = book.publication_date
+        publication_date_str = input(f"Nueva fecha de nacimiento ({book.publication_date}) [DD-MM-YYYY]: ").strip()
+        if publication_date_str:
+            try:
+                publication_date = datetime.strptime(publication_date_str, "%d-%m-%Y").date()
+            except ValueError:
+                print("Formato de fecha inválido. No se actualizará la fecha.")
 
         publisher = input(
             f"Editorial actual: {book.publisher}\nNueva editorial: "
         ).strip()
+
         language = input(f"Idioma actual: {book.language}\nNuevo idioma: ").strip()
 
         # Lista de autores
-        authors = None
-        modify_authors = input("\n¿Desea modificar los autores? (s/n): ").lower()
-        if modify_authors == "s":
-            authors = []
-            while True:
-                author_name = input(
-                    "Ingrese el nombre del autor (o presione Enter para terminar): "
-                ).strip()
-                if not author_name:
-                    if not authors:
-                        print("Debe ingresar al menos un autor.")
-                        continue
-                    break
-                authors.append(Author(author_name))
+        authors = select_authors()
+        
+        while not authors:
+            print("\nDebe ingresar al menos un autor.")
+            authors = select_authors()
 
         # Categorías
-        categories = None
-        modify_categories = input("\n¿Desea modificar las categorías? (s/n): ").lower()
-        if modify_categories == "s":
-            categories = []
-            while True:
-                category_name = input(
-                    "Ingrese una categoría (o presione Enter para terminar): "
-                ).strip()
-                if not category_name:
-                    break
-                categories.append(Category(category_name))
+        categories = select_categories()
 
         # Estado
-        status = None
+        status: ItemStatus = ItemStatus.AVAILABLE
         modify_status = input("\n¿Desea modificar el estado del libro? (s/n): ").lower()
         if modify_status == "s":
             print("\nEstados disponibles:")
@@ -216,13 +196,11 @@ def register_book():
         # Fecha de publicación
         while True:
             try:
-                year = int(input("Ingrese el año de publicación (YYYY): "))
-                month = int(input("Ingrese el mes de publicación (1-12): "))
-                day = int(input("Ingrese el día de publicación (1-31): "))
-                publication_date = date(year, month, day)
+                date_str = input("Ingrese la fecha de publicación (DD-MM-YYYY): ").strip()
+                publication_date = datetime.strptime(date_str, "%d-%m-%Y").date()
                 break
             except ValueError:
-                print("Fecha inválida. Por favor, intente nuevamente.")
+                print("Fecha inválida. Por favor, ingrese la fecha en formato DD-MM-YYYY")
 
         publisher = input("Ingrese la editorial: ").strip()
         while not publisher:
@@ -230,18 +208,7 @@ def register_book():
             publisher = input("Ingrese la editorial: ").strip()
 
         # Lista de autores
-        authors = []
-        while True:
-            author_name = input(
-                "Ingrese el nombre del autor (o presione Enter para terminar): "
-            ).strip()
-            if not author_name:
-                if not authors:
-                    print("Debe ingresar al menos un autor.")
-                    continue
-                break
-            # TODO: Implementar autor
-            authors.append(Author(author_name))
+        authors = select_authors()
 
         ISBN = input("Ingrese el ISBN del libro: ").strip()
         while not ISBN:
@@ -256,16 +223,7 @@ def register_book():
         # Estado por defecto al registrar
         status = ItemStatus.AVAILABLE
 
-        # TODO: Implementar categories
-        # Categorías (opcional)
-        categories = []
-        while True:
-            category_name = input(
-                "Ingrese una categoría (o presione Enter para terminar): "
-            ).strip()
-            if not category_name:
-                break
-            categories.append(Category(category_name))
+        categories = select_categories()
 
         # Registramos el libro
         if Book.register(
