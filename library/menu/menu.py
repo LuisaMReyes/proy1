@@ -1,11 +1,9 @@
 from datetime import date
 from library.items.book import Book
+from library.menu.articles_menu import handle_articles_management
 from library.menu.author_menu import handle_authors_management
 from library.menu.book_menu import handle_books_management
 from library.menu.category_menu import handle_categories_management
-from library.people.author import Author
-from library.categories.category import Category
-from library.helpers.item_status import ItemStatus
 
 
 def display_menu():
@@ -51,10 +49,6 @@ def display_menu():
 
         except ValueError:
             print("\nError: Por favor ingrese un número válido.")
-
-
-def handle_articles_management():
-    print("\nGestión de artículos científicos - En desarrollo...")
 
 
 def handle_thesis_management():
