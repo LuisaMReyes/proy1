@@ -12,7 +12,12 @@ class Author:
         self.birth_date = birth_date
 
     def __str__(self):
-        return f"ID: {self.author_id}\n" f"Nombre: {self.name}\n"
+        return (
+            f"ID: {self.author_id}\n"
+            f"Nombre: {self.name}\n"
+            f"Nacionalidad: {self.nationality}\n"
+            f"Fecha de nacimiento: {self.birth_date}\n"
+        )
 
     @classmethod
     def create(
@@ -32,8 +37,9 @@ class Author:
                 return author
         return None
 
-    def get_authors(self):
-        return self._authors
+    @classmethod
+    def get_authors(cls):
+        return cls._authors
 
     @classmethod
     def patch_author(
