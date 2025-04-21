@@ -1,5 +1,6 @@
 from datetime import date
 from library.items.book import Book
+from library.menu.author_menu import handle_authors_management
 from library.menu.book_menu import handle_books_management
 from library.menu.category_menu import handle_categories_management
 from library.people.author import Author
@@ -62,10 +63,6 @@ def handle_thesis_management():
 
 def handle_copies_management():
     print("\nGestión de copias de libros - En desarrollo...")
-
-
-def handle_authors_management():
-    print("\nGestión de autores - En desarrollo...")
 
 
 def handle_readers_management():
