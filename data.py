@@ -1,4 +1,6 @@
 from datetime import date
+from library.helpers.item_status import ItemStatus
+from library.items.book import Book
 from library.people.author import Author
 from library.categories.category import Category
 
@@ -34,4 +36,20 @@ def load_initial_data():
         name="Isabel Allende",
         nationality="Chile",
         birth_date=date(1942, 8, 2)
+    )
+
+
+    gabriel = Author.get_author_by_id("AU002")
+
+    # Crear libros
+    Book.register(
+        isbn="978-3-16-148410-0",
+        title="Cien años de soledad",
+        genre="Realismo mágico",
+        edition="Primera edición",
+        publication_date=date(1967, 5, 30),
+        publisher="Editorial Sudamericana",
+        authors=[gabriel],
+        language="Español",
+        status=ItemStatus.AVAILABLE,
     )

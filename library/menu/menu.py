@@ -4,6 +4,7 @@ from library.menu.articles_menu import handle_articles_management
 from library.menu.author_menu import handle_authors_management
 from library.menu.book_menu import handle_books_management
 from library.menu.category_menu import handle_categories_management
+from library.menu.copies_menu import handle_copies_management
 from library.menu.thesis_menu import handle_thesis_management
 
 
@@ -50,10 +51,6 @@ def display_menu():
 
         except ValueError:
             print("\nError: Por favor ingrese un número válido.")
-
-
-def handle_copies_management():
-    print("\nGestión de copias de libros - En desarrollo...")
 
 
 def handle_readers_management():

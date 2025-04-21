@@ -40,7 +40,7 @@ def handle_books_management():
 def search_book():
     print("\n====== BÚSQUEDA DE LIBROS ======\n")
     print("1. Ver todos los libros")
-    print("2. Buscar libro por ISBN")
+    print("2. Buscar libro por isbn")
     print("3. Volver\n")
 
     try:
@@ -54,27 +54,27 @@ def search_book():
                 return
 
             print("\n=== LISTADO DE LIBROS ===\n")
-            print("\nISBN | Título | Género | Estado")
+            print("\nisbn | Título | Género | Estado")
             print("-" * 70)
             for book in books:
                 print(
-                    f"{book.ISBN} | {book.title} | {book.genre} | {book.status.value}"
+                    f"{book.isbn} | {book.title} | {book.genre} | {book.status.value}"
                 )
             print("-" * 70)
 
         elif option == 2:
-            # Buscar por ISBN
-            isbn = input("\nIngrese el ISBN del libro: ").strip()
+            # Buscar por isbn
+            isbn = input("\nIngrese el isbn del libro: ").strip()
             while not isbn:
-                print("El ISBN no puede estar vacío.")
-                isbn = input("Ingrese el ISBN del libro: ").strip()
+                print("El isbn no puede estar vacío.")
+                isbn = input("Ingrese el isbn del libro: ").strip()
 
-            book = Book.get_book_by_ISBN(isbn)
+            book = Book.get_book_by_isbn(isbn)
             if book:
                 print("\n=== LIBRO ENCONTRADO ===\n")
                 print(book)
             else:
-                print("\nNo se encontró ningún libro con ese ISBN.")
+                print("\nNo se encontró ningún libro con ese isbn.")
 
         elif option == 3:
             return
@@ -88,15 +88,15 @@ def search_book():
 def modify_book():
     print("\n====== MODIFICAR LIBRO ======\n")
 
-    # Primero buscamos el libro por ISBN
-    isbn = input("Ingrese el ISBN del libro a modificar: ").strip()
+    # Primero buscamos el libro por isbn
+    isbn = input("Ingrese el isbn del libro a modificar: ").strip()
     while not isbn:
-        print("El ISBN no puede estar vacío.")
-        isbn = input("Ingrese el ISBN del libro a modificar: ").strip()
+        print("El isbn no puede estar vacío.")
+        isbn = input("Ingrese el isbn del libro a modificar: ").strip()
 
-    book = Book.get_book_by_ISBN(isbn)
+    book = Book.get_book_by_isbn(isbn)
     if not book:
-        print("\nNo se encontró ningún libro con ese ISBN.")
+        print("\nNo se encontró ningún libro con ese isbn.")
         return
 
     try:
@@ -220,10 +220,10 @@ def register_book():
         # Lista de autores
         authors = select_authors()
 
-        ISBN = input("Ingrese el ISBN del libro: ").strip()
-        while not ISBN:
-            print("El ISBN no puede estar vacío.")
-            ISBN = input("Ingrese el ISBN del libro: ").strip()
+        isbn = input("Ingrese el isbn del libro: ").strip()
+        while not isbn:
+            print("El isbn no puede estar vacío.")
+            isbn = input("Ingrese el isbn del libro: ").strip()
 
         language = input("Ingrese el idioma del libro: ").strip()
         while not language:
@@ -243,14 +243,14 @@ def register_book():
             publication_date=publication_date,
             publisher=publisher,
             authors=authors,
-            ISBN=ISBN,
+            isbn=isbn,
             language=language,
             status=status,
             categories=categories,
         ):
             print("\n¡Libro registrado exitosamente!")
         else:
-            print("\nError: El ISBN ya existe en el sistema.")
+            print("\nError: El isbn ya existe en el sistema.")
 
     except Exception as e:
         print(f"\nError al registrar el libro: {str(e)}")
