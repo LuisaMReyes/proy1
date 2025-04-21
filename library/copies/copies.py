@@ -5,7 +5,7 @@ from library.helpers.error import ErrorType,ErrorManager
 
 class Copies:
 
-    _copies=List["Copies"]=[]
+    _copies: List[Copies] = []
     def __init__(
             self,
             copy_ID:str,
