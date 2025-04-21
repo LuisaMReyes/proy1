@@ -44,6 +44,7 @@ class Loan:
     ) -> bool:
         if cls.get_by_id(loan_id):
             return False
+
         new_loan = Loan(
             loan_id,
             product_type,
