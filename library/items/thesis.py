@@ -7,7 +7,6 @@ from library.helpers.item_status import ItemStatus
 from library.people.author import Author
 
 
-
 class Thesis:
 
     _theses: List[Thesis] = []
@@ -23,7 +22,6 @@ class Thesis:
         page_number: int,
         status: ItemStatus,
         categories: List[Category],
-        
     ):
         self.title = title
         self.authors = authors
@@ -63,11 +61,10 @@ class Thesis:
         page_number: int,
         status: ItemStatus,
         categories: List[Category],
-        
     ) -> bool:
-        if cls.get_specific_thesis(authors,academy,investi_date,publication_date):
-           return False
-            
+        if cls.get_specific_thesis(authors, academy, investi_date, publication_date):
+            return False
+
         new_thesis = cls(
             title=title,
             authors=authors,
@@ -84,9 +81,9 @@ class Thesis:
 
     @classmethod
     def get_thesis_by_author(
-       cls, 
-       author_name: str,
-       ) -> List["Thesis"]:
+        cls,
+        author_name: str,
+    ) -> List["Thesis"]:
         result = []
         for thesis in cls._theses:
             if any(
@@ -94,70 +91,71 @@ class Thesis:
             ):
                 result.append(thesis)
         return result
+
     @classmethod
     def get_specific_thesis(
-       cls,
-       authors:List[Author],
-       academy:str,
-       investi_date:date,
-       publication_date:date,
-       )-> Thesis|None:
-       for thesis in cls._theses:
-          if(
-              set(thesis.authors)==set(authors) and
-                thesis.academy.lower()==academy.lower() and
-                thesis.investi_date==investi_date and
-                thesis.publication_date==publication_date
+        cls,
+        authors: List[Author],
+        academy: str,
+        investi_date: date,
+        publication_date: date,
+    ) -> Thesis | None:
+        for thesis in cls._theses:
+            if (
+                set(thesis.authors) == set(authors)
+                and thesis.academy.lower() == academy.lower()
+                and thesis.investi_date == investi_date
+                and thesis.publication_date == publication_date
+            ):
+                return thesis
+        return None
 
-          ):
-             return thesis
-       return None
-  
     def update_thesis(
-    self,
-    new_title: str = None,
-    new_authors: List[Author] = None,
-    new_academy: str = None,
-    new_investi_date: date = None,
-    new_publication_date: date = None,
-    new_field: str = None,
-    new_page_number: int = None,
-    new_status: ItemStatus = None,
-    new_categories: List[Category] = None,
-) -> None:
-     if self.status != ItemStatus.AVAILABLE:
-        print("No se puede modificar una tesis inhabilitada .")
-        return
-     if new_title:
-        self.title = new_title
-     if new_authors:
-        self.authors = new_authors
-     if new_academy:
-        self.academy = new_academy
-     if new_investi_date:
-        self.investi_date = new_investi_date
-     if new_publication_date:
-        self.publication_date = new_publication_date
-     if new_field:
-        self.field = new_field
-     if new_page_number:
-        self.page_number = new_page_number
-     if new_status:
-        self.status=new_status
-     if new_categories :
-       self.categories= new_categories
+        self,
+        new_title: str | None = None,
+        new_authors: List[Author] | None = None,
+        new_academy: str | None = None,
+        new_investi_date: date | None = None,
+        new_publication_date: date | None = None,
+        new_field: str | None = None,
+        new_page_number: int | None = None,
+        new_status: ItemStatus | None = None,
+        new_categories: List[Category] | None = None,
+    ) -> None:
+        if self.status != ItemStatus.AVAILABLE:
+            print("No se puede modificar una tesis inhabilitada .")
+            return
+        if new_title:
+            self.title = new_title
+        if new_authors:
+            self.authors = new_authors
+        if new_academy:
+            self.academy = new_academy
+        if new_investi_date:
+            self.investi_date = new_investi_date
+        if new_publication_date:
+            self.publication_date = new_publication_date
+        if new_field:
+            self.field = new_field
+        if new_page_number:
+            self.page_number = new_page_number
+        if new_status:
+            self.status = new_status
+        if new_categories:
+            self.categories = new_categories
 
     @classmethod
     def delete_thesis(
-       cls,
-       authors:List[Author],
-       academy:str,
-       investi_date:date,
-       publication_date:date)->bool:
-       thesis=cls.get_specific_thesis(authors,academy,investi_date,publication_date)
-       if thesis:
-          cls._theses.remove(thesis)
-          return True
-       return False
-       
-    
+        cls,
+        authors: List[Author],
+        academy: str,
+        investi_date: date,
+        publication_date: date,
+    ) -> bool:
+        thesis = cls.get_specific_thesis(
+            authors, academy, investi_date, publication_date
+        )
+        if thesis:
+            cls._theses.remove(thesis)
+            return True
+        return False
