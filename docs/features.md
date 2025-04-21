@@ -5,7 +5,7 @@
 - Registrar, buscar y modificar libros (no se eliminan, solo se inhabilitan).
 - Asignación de categorías a todos los productos.
 
-###📙📗📘 Libros y copias
+### 📙📗📘 Libros y copias
 - Control de copias físicas de libros con estados (prestada, en biblioteca, en reparación, etc.).
 - Registro automático de al menos una copia al registrar un libro y asociarla a este.
 
