@@ -5,6 +5,7 @@ from library.menu.author_menu import handle_authors_management
 from library.menu.book_menu import handle_books_management
 from library.menu.category_menu import handle_categories_management
 from library.menu.copies_menu import handle_copies_management
+from library.menu.loan_menu import handle_loans_management
 from library.menu.thesis_menu import handle_thesis_management
 
 
@@ -55,10 +56,6 @@ def display_menu():
 
 def handle_readers_management():
     print("\nGestión de lectores - En desarrollo...")
-
-
-def handle_loans_management():
-    print("\nGestión de préstamos - En desarrollo...")
 
 
 def handle_fines_management():
