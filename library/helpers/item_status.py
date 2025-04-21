@@ -8,3 +8,5 @@ class ItemStatus(Enum):
     UNDER_REVIEW = "En revisión"
     UNDER_REPAIR = "En reparación"
     UNAVAILABLE = "No disponible"
+    
+   

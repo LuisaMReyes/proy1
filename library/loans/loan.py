@@ -26,7 +26,7 @@ class Loan:
         self.reader_id = reader_id
         self.days = days
         self.loan_date = loan_date
-        self.estimated_return = self.calculate_return_date()
+        self.estimated_return_date= self.calculate_return_date()
         self.active = active
 
     def calculate_return_date(self) -> date:

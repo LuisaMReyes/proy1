@@ -12,8 +12,6 @@ class Article:
     Clase que representa un artículo científico con sus atributos correspondientes.
     """
 
-    # Variable de clase para mantener el contador de IDs
-    _next_id = 1
     # Lista para almacenar todos los artículos
     _articles = []
 
@@ -120,6 +118,11 @@ class Article:
             new_authors:List[Author]=None,
             new_categories:List[Category]=None,
     ) -> None:
+         
+         
+         if self.status != ItemStatus.AVAILABLE:
+             print("No se puede modificar un artículo inhabilitado .")
+             return
          if new_doi:
             self.doi=new_doi
          if new_title:
