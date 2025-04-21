@@ -57,7 +57,9 @@ def search_book():
             print("\nISBN | Título | Género | Estado")
             print("-" * 70)
             for book in books:
-                print(f"{book.ISBN} | {book.title} | {book.genre} | {book.status.value}")
+                print(
+                    f"{book.ISBN} | {book.title} | {book.genre} | {book.status.value}"
+                )
             print("-" * 70)
 
         elif option == 2:
@@ -107,10 +109,14 @@ def modify_book():
 
         # Fecha de publicación
         publication_date = book.publication_date
-        publication_date_str = input(f"Nueva fecha de nacimiento ({book.publication_date}) [DD-MM-YYYY]: ").strip()
+        publication_date_str = input(
+            f"Nueva fecha de nacimiento ({book.publication_date}) [DD-MM-YYYY]: "
+        ).strip()
         if publication_date_str:
             try:
-                publication_date = datetime.strptime(publication_date_str, "%d-%m-%Y").date()
+                publication_date = datetime.strptime(
+                    publication_date_str, "%d-%m-%Y"
+                ).date()
             except ValueError:
                 print("Formato de fecha inválido. No se actualizará la fecha.")
 
@@ -122,7 +128,7 @@ def modify_book():
 
         # Lista de autores
         authors = select_authors()
-        
+
         while not authors:
             print("\nDebe ingresar al menos un autor.")
             authors = select_authors()
@@ -196,11 +202,15 @@ def register_book():
         # Fecha de publicación
         while True:
             try:
-                date_str = input("Ingrese la fecha de publicación (DD-MM-YYYY): ").strip()
+                date_str = input(
+                    "Ingrese la fecha de publicación (DD-MM-YYYY): "
+                ).strip()
                 publication_date = datetime.strptime(date_str, "%d-%m-%Y").date()
                 break
             except ValueError:
-                print("Fecha inválida. Por favor, ingrese la fecha en formato DD-MM-YYYY")
+                print(
+                    "Fecha inválida. Por favor, ingrese la fecha en formato DD-MM-YYYY"
+                )
 
         publisher = input("Ingrese la editorial: ").strip()
         while not publisher:
