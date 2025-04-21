@@ -56,7 +56,6 @@ Archivo principal del sistema. Se encarga de importar las clases necesarias desd
 Este paquete agrupa todas las clases y funcionalidades del sistema, distribuidas en subpaquetes temáticos para mejorar la legibilidad.
 
 ### `items/`Módulo que maneja los productos de la biblioteca: Libros, Tesis y Artículos.
-        ###`items/article`
 
 ### `people/`Módulo que gestiona la información de autores y lectores.
 
