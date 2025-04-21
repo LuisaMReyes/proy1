@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 from typing import List
-from library.helpers.item_type import ProductType
 from library.helpers.fine_status import Fine_Status
 from library.loans.loan import Loan
 
