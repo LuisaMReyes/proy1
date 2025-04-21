@@ -11,7 +11,6 @@ from library.people.author import Author
 
 class Book:
 
-    _next_ido = 1
     _books = []
 
     def __init__(
@@ -119,6 +118,10 @@ class Book:
             new_status:ItemStatus=None,
             new_categories:List[Category]=None,
     )-> None:
+         
+         if self.status != ItemStatus.AVAILABLE:
+           print("No se puede modificar un libro inhabilitado.")
+           return
          if new_genre:
             self.genre=new_genre
          if new_title:
