@@ -26,14 +26,15 @@ class Loan:
         self.reader_id = reader_id
         self.days = days
         self.loan_date = loan_date
-        self.estimated_return_date= self.calculate_return_date()
+        self.estimated_return_date = self.calculate_return_date()
         self.active = active
 
     def calculate_return_date(self) -> date:
         return self.loan_date + timedelta(days=self.days)
 
+    @classmethod
     def register(
-        self,
+        cls,
         loan_id: str,
         product_type: ProductType,
         product_id: str,
@@ -41,7 +42,7 @@ class Loan:
         days: int,
         loan_date: date,
     ) -> bool:
-        if self.get_by_id(loan_id):
+        if cls.get_by_id(loan_id):
             return False
         new_loan = Loan(
             loan_id,
@@ -52,7 +53,7 @@ class Loan:
             loan_date,
             active=True,
         )
-        self._loans.append(new_loan)
+        cls._loans.append(new_loan)
         return True
 
     @classmethod
@@ -78,8 +79,9 @@ class Loan:
     def get_all(cls) -> List[Loan]:
         return cls._loans
 
-    def cancel(self, loan_id: str) -> bool:
-        loan = self.get_by_id(loan_id)
+    @classmethod
+    def cancel(cls, loan_id: str) -> bool:
+        loan = cls.get_by_id(loan_id)
         if not loan:
             return False
         loan.active = False
