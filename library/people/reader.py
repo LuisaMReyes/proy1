@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import List
+from library.fines.fine import Fine
 from library.helpers.reader_status import ReaderStatus
 from library.loans.loan import Loan
 
@@ -17,14 +18,15 @@ class Reader:
         self.address = address
         self.status = status
 
+    @classmethod
     def create(
-        self, reader_id: str, name: str, phone: str, address: str, status: ReaderStatus
+        cls, reader_id: str, name: str, phone: str, address: str, status: ReaderStatus
     ) -> bool:
-        if self.get_by_id(reader_id):
+        if cls.get_by_id(reader_id):
             return False
 
         new_reader = Reader(reader_id, name, phone, address, status)
-        self._readers.append(new_reader)
+        cls._readers.append(new_reader)
         return True
 
     def modify(
@@ -46,34 +48,39 @@ class Reader:
             reader.address = address
         return True
 
-    def set_status(self, reader_id: str, status: ReaderStatus) -> bool:
-        reader = self.get_by_id(reader_id)
+    @classmethod
+    def set_status(cls, reader_id: str, status: ReaderStatus) -> bool:
+        reader = cls.get_by_id(reader_id)
         if not reader:
             return False
         reader.status = status
         return True
 
-    def get_all(self) -> List[Reader]:
-        return self._readers
+    @classmethod
+    def get_all(cls) -> List[Reader]:
+        return cls._readers
 
-    def get_by_id(self, reader_id: str) -> Reader | None:
-        for reader in self._readers:
+    @classmethod
+    def get_by_id(cls, reader_id: str) -> Reader | None:
+        for reader in cls._readers:
             if reader.reader_id == reader_id:
                 return reader
         return None
 
-    def get_active_loans(self) -> List[Loan]:
-        return Loan.get_by_reader_id(self.reader_id)
+    @classmethod
+    def get_active_loans(cls, reader_id: str) -> List[Loan]:
+        return Loan.get_by_reader_id(reader_id)
 
-    def can_borrow(self, reader_id: str) -> bool:
-        reader = self.get_by_id(reader_id)
+    @classmethod
+    def can_borrow(cls, reader_id: str) -> bool:
+        reader = cls.get_by_id(reader_id)
         if not reader:
             return False
-        return len(self.get_active_loans()) < 3 and reader.status == ReaderStatus.NORMAL
+        return (
+            len(cls.get_active_loans(reader_id)) < 3
+            and reader.status == ReaderStatus.NORMAL
+        )
 
-    # def add_loan(self, reader_id: str) -> bool:
-    #     reader = self.get_by_id(reader_id)
-    #     if not reader or not self.can_borrow(reader_id):
-    #         return False
-    #     reader.active_loans += 1
-    #     return True
+    @classmethod
+    def get_fines(cls, reader_id: str) -> List[Fine]:
+        return Fine.get_fines_by_reader_id(reader_id)
