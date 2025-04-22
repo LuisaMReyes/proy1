@@ -60,9 +60,8 @@ class Fine:
     ) -> bool:
         for fine in cls._fines:
             if fine.id_fine == fine_id and fine.status == Fine_Status.ACTIVE:
-                if fine.end_date and date.today() >= fine.end_date:
-                    fine.status = Fine_Status.INACTIVE
-                    return True
+                fine.status = Fine_Status.INACTIVE
+                return True
         return False
 
     @classmethod

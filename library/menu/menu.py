@@ -5,6 +5,7 @@ from library.menu.author_menu import handle_authors_management
 from library.menu.book_menu import handle_books_management
 from library.menu.category_menu import handle_categories_management
 from library.menu.copies_menu import handle_copies_management
+from library.menu.fines_menu import handle_fines_management
 from library.menu.loan_menu import handle_loans_management
 from library.menu.reader_menu import handle_readers_management
 from library.menu.thesis_menu import handle_thesis_management
@@ -53,7 +54,3 @@ def display_menu():
 
         except ValueError:
             print("\nError: Por favor ingrese un número válido.")
-
-
-def handle_fines_management():
-    print("\nGestión de multas - En desarrollo...")

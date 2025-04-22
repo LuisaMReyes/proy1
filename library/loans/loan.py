@@ -81,6 +81,10 @@ class Loan:
         return cls._loans
 
     @classmethod
+    def get_active_loans(cls) -> List[Loan]:
+        return [loan for loan in cls._loans if loan.active]
+
+    @classmethod
     def cancel(cls, loan_id: str) -> bool:
         loan = cls.get_by_id(loan_id)
         if not loan:
